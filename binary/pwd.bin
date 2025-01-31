@@ -1,0 +1,63 @@
+# >>>>>>>>>>>>>>>>>>>>> ELF FILE HEADER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                                                                        
+01111111 01000101 01001100 01000110                                     # e_ident[EI_MAG]: ELF magic number
+00000010                                                                # e_ident[EI_CLASS]: 1: 32-bit, 2: 64-bit
+00000001                                                                # e_ident[EI_DATA]: 1: little-endian, 2: big-endian
+00000001                                                                # e_ident[EI_VERSION]: ELF header version; must be 1
+00000000                                                                # e_ident[EI_OSABI]: Target OS ABI; should be 0
+
+00000000                                                                # e_ident[EI_ABIVERSION]: ABI version; 0 is ok for Linux
+00000000 00000000 00000000                                              # e_ident[EI_PAD]: unused, should be 0
+00000000 00000000 00000000 00000000  
+
+00000010 00000000                                                       # e_type: object file type; 2: executable
+00111110 00000000                                                       # e_machine: instruction set architecture; 3: x86, 3E: amd64
+00000001 00000000 00000000 00000000                                     # e_version: ELF identification version; must be 1
+
+01111000 00000000 01000000 00000000 00000000 00000000 00000000 00000000 # e_entry: memory address of entry point (where process starts)
+01000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 # e_phoff: file offset where program headers begin
+00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 # e_shoff: file offset where section headers begin
+00000000 00000000 00000000 00000000                                     # e_flags: 0 for x86
+
+01000000 00000000                                                       # e_ehsize: size of this header
+00111000 00000000                                                       # e_phentsize: size of each program header
+00000001 00000000                                                       # e_phnum: #program headers
+01000000 00000000                                                       # e_shentsize: size of each section header
+00000000 00000000                                                       # e_shnum: #section headers
+00000000 00000000                                                       # e_shstrndx: index of section header containing section names
+
+# >>>>>>>>>>>>>>>>>>>>> ELF PROGRAM HEADER <<<<<<<<<<<<<<<<<<<<<<<<
+
+00000001 00000000 00000000 00000000                                     # p_type: segment type; 1: loadable
+00000111 00000000 00000000 00000000                                     # p_flags: segment-dependent flags
+
+00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 # p_offset: file offset where segment begins
+00000000 00000000 01000000 00000000 00000000 00000000 00000000 00000000 # p_vaddr: virtual address of segment in memory
+
+00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 # p_paddr: physical address of segment
+10111111 00000000 00000000 00000000 00000000 00000000 00000000 00000000 # p_filesz: size in bytes of the segment in the file image
+
+10111111 00000000 00000000 00000000 00000000 00000000 00000000 00000000 # p_memsz: size in bytes of the segment in memory
+00000000 00010000 00000000 00000000 00000000 00000000 00000000 00000000 # p_align
+
+# >>>>>>>>>>>>> PROGRAM SEGMENT <<<<<<<<<<<<<
+
+01001000 10000001 11101100 00000000 00000001 00000000 00000000          # sub rsp, 0x100
+
+01001000 11000111 11000000 01001111 00000000 00000000 00000000          # mov rax, 0x4f
+01001000 10001001 11100111                                              # mov rdi, rsp
+01001000 11000111 11000110 00000000 00000001 00000000 00000000          # mov rsi, 0x100
+00001111 00000101                                                       # syscall
+
+11000110 00000100 00000100 00001010                                     # mov byte [rsp + rax], 0x0A
+01001000 11111111 11000000                                              # inc rax
+
+01001000 11000111 11000000 00000001 00000000 00000000 00000000          # mov rax, 0x1
+01001000 11000111 11000111 00000001 00000000 00000000 00000000          # mov rdi, 0x1
+01001000 10001001 11100110                                              # mov rsi, rsp
+01001000 11000111 11000010 00000000 00000001 00000000 00000000          # mov rdx, 0x100
+00001111 00000101                                                       # syscall
+
+01001000 11000111 11000000 00111100 00000000 00000000 00000000          # mov rax, 0x3c
+01001000 00110001 11111111                                              # xor rdi, rdi
+00001111 00000101                                                       # syscall
